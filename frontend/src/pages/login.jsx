@@ -44,12 +44,12 @@ function LoginPage(){
                         <input 
                         type="text" 
                         placeholder="Username" 
-                        className="w-full h-15 rounded-2xl border bg-white border-gray-300 px-3"/>
+                        className="w-full h-15 rounded-2xl focus:outline-none bg-white border-gray-300 px-3"/>
                         <label className="self-start -mb-3 ml-2 text-gray-700 font-medium">Password</label>
                         <input 
                         type="password" 
                         placeholder="Password" 
-                        className="w-full h-15 rounded-2xl border bg-white border-gray-300 px-3"/>
+                        className="w-full h-15 rounded-2xl focus:outline-none border bg-white border-gray-300 px-3"/>
                         <br/>
                         <button 
                         type="submit" 
