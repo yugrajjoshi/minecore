@@ -6,7 +6,7 @@ function NavBar() {
 	const[activeButton,setactiveButton] = useState("home");
 
 	return (
-		<dev className=" flex flex-col justify-between auto h-full  border  border-b border-zinc-200 bg-white/90 backdrop-blur-sm">
+		<dev className=" flex flex-col justify-between auto h-full bg-white/90 backdrop-blur-sm">
            <div className="flex justify-between  items-center  w-45 h-45 " ><img
                   alt="logo.svg" 
                   src="src/assets/logo.png"
