@@ -5,9 +5,9 @@ import LineOverview from "./DashLineChart";
 function DashBoard() {
     return(
     <>
-      <section className="w-full h-full bg-zinc-800 rounded-lg p-5">
-        <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-        <div className="w-full h-full bg-white/20 border-black drop-shadow-2xl text-white border rounded-lg " >
+      <section className="flex flex-col m-2 w-full h-full shadow-lg  bg-gray-300 rounded-lg p-5">
+        <h1 className="flex text-2xl text-black w-35 font-bold mb-4">Dashboard</h1> 
+        <div className="flex-1 w-full h-full  bg-gray-2300  text-white drop-shadow-lg rounded-lg " >
             <LineOverview />
         </div>
       </section>

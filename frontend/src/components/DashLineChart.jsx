@@ -98,7 +98,7 @@ export default function LineOverview() {
         US unemployment rate comparison with GDP per capita
       </Typography>
       <ChartsDataProvider
-        height={300}
+        height={250}
         dataset={usaUnemploymentAndGdp}
         series={[
           {
