@@ -1,8 +1,58 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage(){
     const [userType, setUserType] = useState("USER");
+    const navigate = useNavigate();
+
+    const[username,setUsername] = useState("");
+    const[password,setPassword] = useState("");
+    const[error,setError] = useState("");
+    const[loading,setLoading] = useState(false);
+
+   // Function to handle form submission
+   const handleLogin = async(e) =>{
+        e.preventDefault();
+        setError("");
+        setLoading(true);
+        
+        try{
+            const response = await fetch("/api/accounts/login/",{
+                method: "POST",
+                headers:{
+                    "Content-Type": "application/json",},
+                    body: JSON.stringify({
+                        username,
+                        password,
+                        userType
+                    }),
+                });
+
+                const data= await response.json();
+
+                if(!response.ok){
+                    setError(data.message || "Login failed");
+                    return;
+                }
+                // Handle successful login (e.g., store token, redirect)
+                localStorage.setItem("username",data.username);
+                localStorage.setItem("userType",data.userType);
+
+                if(data.isAdmin){
+                    navigate("/adminhome");
+                }
+                else{navigate("/userhome")}
+            }
+            catch(err){
+                setError("An error occurred. Please try again.");
+            }
+            finally{
+                setLoading(false);
+            }
+        };
+
+
 
     const handleUserTypeChange = (type) => {
         setUserType(type);
@@ -38,30 +88,32 @@ function LoginPage(){
                     </button>
                 </div>
                 <div className=" w-full h-full p-5 rounded ">
-                    <form className="flex flex-col items-center w-full h-full  gap-5">
+                    <form 
+                    onSubmit={handleLogin}
+                    className="flex flex-col items-center w-full h-full  gap-5">
                         <label className="self-start text-gray-700 font-medium ">Login as {userType}</label>
                         <label className="self-start -mb-3 ml-2 text-gray-700 font-medium">Username</label>
                         <input 
                         type="text" 
-                        placeholder="Username" 
+                        placeholder="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                         className="w-full h-15 rounded-2xl focus:outline-none bg-white border-gray-300 px-3"/>
                         <label className="self-start -mb-3 ml-2 text-gray-700 font-medium">Password</label>
                         <input 
                         type="password" 
                         placeholder="Password" 
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         className="w-full h-15 rounded-2xl focus:outline-none border bg-white border-gray-300 px-3"/>
                         {userType === "USER" && <p className="text-gray-600 text-sm self-start ml-3 ">Use the credentials provided by your administrator</p>}
                         {userType === "ADMIN" && <p className="text-gray-600 text-sm self-start ml-3 ">Use your admin credentials to login</p>}
                         <button 
                         type="submit" 
-                        className="w-full h-15 bg-white transition-all duration-300 text-zinc-700 font-bold rounded-4xl hover:bg-gray-100">Login</button>
-                        <div className="flex flex-row justify-between w-full pl-5 pr-5  ">
-                            <button className="  rounded-4xl bg-white p-2 self-start "
-                            >language
-                            </button>
-                            
+                        disabled={loading}
+                        className="w-full h-15 bg-white transition-all duration-300 text-zinc-700 font-bold rounded-4xl hover:bg-gray-100">{loading? "Logging in...":"Login"}</button>
                         <a href="/forgot-password" className="  rounded-4xl self-end text-blue-500 hover:underline">Forgot Password?</a>
-                        </div>
+                        {error && <p className="text-red-500 text-sm">{error}</p>}
                     </form>
                 </div>
              </div>

@@ -13,14 +13,19 @@ function NavBar() {
                   />
                   <br/>
                 </div>
-            <div className=" flex flex-col w-full h-full  items-start justify-between p-5">
-				<nav className=" flex flex-col gap-5  items-center justify-between ">
-					<Link to="/" className="flex items-center gap-2 text-sm font-medium text-zinc-600 transition hover:text-zinc-900">
+            <div className=" flex flex-col w-full h-full border mt-5  p-5">
+				<nav className=" flex flex-col h-1/2 w-full p-2 border justify-between ">
+					<Link to="/adminhome" className=" border w-full flex  gap-5 text-gray-300 rounded-4xl p-3  transition-all duration-300 hover:bg-gray-700 hover:text-white">
 						<Home size={20} />
 						Home
 					</Link>
 
-					<Link to="/login" className="flex items-center gap-2 text-sm font-medium text-zinc-600 transition hover:text-zinc-900">
+					<Link to="/createshift" className=" border w-full flex  gap-5 text-gray-300 rounded-4xl p-3  transition-all duration-300 hover:bg-gray-700 hover:text-white">
+						<Home size={20} />
+						Create Shift
+					</Link>
+					
+					<Link to="/login" className=" border w-full flex  gap-5 text-gray-300 rounded-4xl p-3  transition-all duration-300 hover:bg-gray-700 hover:text-white">
 						<LogIn size={16} />
 						Login
 					</Link>
