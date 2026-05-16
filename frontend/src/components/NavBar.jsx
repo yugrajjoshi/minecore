@@ -6,10 +6,10 @@ function NavBar() {
 	const[activeButton,setactiveButton] = useState("home");
 
 	return (
-		<dev className=" flex flex-col justify-between auto h-full bg-white backdrop-blur-sm">
+		<dev className=" flex flex-col justify-between auto h-full bg-zinc-800 backdrop-blur-sm">
            <div className="flex justify-center  items-start  w-full h-45 " ><img
                   alt="logo.svg" 
-                  src="src/assets/logo.png"
+                  src="src/assets/logo.svg"
                   />
                   <br/>
                 </div>
