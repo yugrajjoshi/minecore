@@ -15,12 +15,11 @@ def login(request):
     
     user = authenticate(request, username=username, password=password)
 
-    if user is None:
+    if user is  None:
         return Response(
-            {'message': "Invalid credentials"},
+            {'message': "invalid credentials"},
             status=status.HTTP_401_UNAUTHORIZED
         )
-
     if user_type == 'ADMIN' and not user.is_staff:
         return Response(
             {'message' : "you are not allowed to login as admin"},
@@ -39,3 +38,4 @@ def login(request):
         },
         status=status.HTTP_200_OK
     )
+

@@ -37,7 +37,7 @@ function LoginPage(){
                 }
                 // Handle successful login (e.g., store token, redirect)
                 localStorage.setItem("username",data.username);
-                localStorage.setItem("userType",data.userType);
+                localStorage.setItem("isAdmin",data.isAdmin);
 
                 if(data.isAdmin){
                     navigate("/adminhome");
