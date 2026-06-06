@@ -6,7 +6,7 @@ function LoginPage(){
     const [userType, setUserType] = useState("USER");
     const navigate = useNavigate();
 
-    const[username,setUsername] = useState("");
+    const[employeeId,setEmployeeId] = useState("");
     const[password,setPassword] = useState("");
     const[error,setError] = useState("");
     const[loading,setLoading] = useState(false);
@@ -23,7 +23,7 @@ function LoginPage(){
                 headers:{
                     "Content-Type": "application/json",},
                     body: JSON.stringify({
-                        username,
+                        employee_id: employeeId,
                         password,
                         userType
                     }),
@@ -36,7 +36,7 @@ function LoginPage(){
                     return;
                 }
                 // Handle successful login (e.g., store token, redirect)
-                localStorage.setItem("username",data.username);
+                localStorage.setItem("employee_id",data.employee_id);
                 localStorage.setItem("isAdmin",data.isAdmin);
 
                 if(data.isAdmin){
@@ -92,12 +92,12 @@ function LoginPage(){
                     onSubmit={handleLogin}
                     className="flex flex-col items-center w-full h-full  gap-5">
                         <label className="self-start text-gray-700 font-medium ">Login as {userType}</label>
-                        <label className="self-start -mb-3 ml-2 text-gray-700 font-medium">Username</label>
+                        <label className="self-start -mb-3 ml-2 text-gray-700 font-medium">Employee ID</label>
                         <input 
                         type="text" 
-                        placeholder="Username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="Employee ID"
+                        value={employeeId}
+                        onChange={(e) => setEmployeeId(e.target.value)}
                         className="w-full h-15 rounded-2xl focus:outline-none bg-white border-gray-300 px-3"/>
                         <label className="self-start -mb-3 ml-2 text-gray-700 font-medium">Password</label>
                         <input 

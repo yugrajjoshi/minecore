@@ -125,3 +125,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Allow authenticating by employee_id using our custom backend while keeping ModelBackend as fallback
+AUTHENTICATION_BACKENDS = [
+    'accounts.backends.EmployeeIDBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
