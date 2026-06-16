@@ -1,0 +1,36 @@
+PROJECT PROGRESS REPORT: MINECORE
+
+1. Tech Stack Overview:
+- Backend: Django REST Framework (running on port 8000), using SQLite database.
+- Frontend: React + Vite + Tailwind CSS (running on port 5173).
+
+2. Component & Feature Status:
+
+- User Accounts & Auth:
+  - Custom user authentication backend (EmployeeIDBackend) is implemented to log in via employee_id and password.
+  - Profile models (EmployeeProfile) support automatic employee_id generation (EM<year>001, EM<year>002, etc.).
+  - Two Django superusers exist in DB: "yugraj" (no profile) and "kushhh" (linked profile EM2026001).
+  - Frontend Login screen works by saving employee_id and isAdmin flag to localStorage.
+  
+- Employee Management:
+  - Mocked on frontend with a static list of 4 employees in ManageEmployes.jsx.
+  - Backend does not yet have API routes for Employee CRUD operations.
+
+- Danger & Safety Management:
+  - dangerdetails models.py was cleared out per user request.
+  - Frontend renders a placeholder safety status "NOMINAL" using static state in dagermeter.jsx.
+  - DangerList.jsx is an empty container.
+
+- Shift Tracking:
+  - shitdetails models.py is empty (cleared per user request).
+  - CurrentShiftDetials.jsx displays static shift timing details (8:00 AM - 4:00 PM).
+  - ShiftDetailsTable.jsx uses the "chance" library to display 200 random mock employees.
+
+- Equipment:
+  - No backend models exist.
+  - Frontend displays static mock status for 3 pieces of equipment (Ventilation System, Safety Gear, Drilling Unit).
+
+3. Phase Action Plan:
+- Phase 1: Rebuild backend database models for Danger Alerts, Shifts, Shift Assignments, and Equipment.
+- Phase 2: Create DRF Serializer endpoints for all newly created database tables.
+- Phase 3: Connect Frontend pages and tables (Manage Employees, Danger Meter, Shift Details, and Equipment status) to fetch live data from the backend APIs instead of mock objects.

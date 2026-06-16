@@ -2,6 +2,11 @@ from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import generics
+from .models import EmployeeProfile
+from .serializers import EmployeeProfileSerializer
+
+
 
 
 @api_view(['POST'])
@@ -30,3 +35,17 @@ def login(request):
 
     return Response({'message': 'Login successful', 'employee_id': employee_id, 'isAdmin': user.is_staff}, status=status.HTTP_200_OK)
 
+
+
+class EmployeeListCreateView(generics.ListCreateAPIView):
+    """
+    Handles:
+    - GET /api/accounts/employees/ (List all employees)
+    - POST /api/accounts/employees/ (Create a new employee)
+    """
+    queryset = EmployeeProfile.objects.all()
+    serializer_class = EmployeeProfileSerializer
+
+class EmployeeRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = EmployeeProfile.objects.all()
+    serializer_class = EmployeeProfileSerializer

@@ -1,42 +1,64 @@
+import {useState, useEffect} from 'react'   
+
 import { Filter, Pencil, Plus, Search, Trash2, UserCheck } from "lucide-react";
 import NavBar from "../components/NavBar";
 
-const employees = [
-  {
-    id: 1,
-    name: "Rahul Sharma",
-    username: "rahul.sharma",
-    role: "Supervisor",
-    shift: "Morning",
-    status: "Active",
-  },
-  {
-    id: 2,
-    name: "Amit Verma",
-    username: "amit.verma",
-    role: "Operator",
-    shift: "Night",
-    status: "Active",
-  },
-  {
-    id: 3,
-    name: "Priya Nair",
-    username: "priya.nair",
-    role: "Safety Officer",
-    shift: "Evening",
-    status: "Inactive",
-  },
-  {
-    id: 4,
-    name: "Karan Mehta",
-    username: "karan.mehta",
-    role: "Technician",
-    shift: "Morning",
-    status: "Active",
-  },
-];
 
 function ManageEmployes() {
+ 
+  const [employees, setEmployees] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [searchQuerry, setSearchQuerry] = useState("");
+  const [sortBy, setSortBy] = useState("name");
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [isAddModelOpen, setIsAddModelOpen] = useState(false);
+
+
+ const [NewEmployee, setNewEmployee] = useSate({
+
+  full_name: "",
+  phone_number: "",
+  designation:"",
+  is_active: true,
+
+ })
+
+
+
+
+
+
+  const API_BASE_URL = "http://127.0.0.1:8000";
+                          
+  const fetchEmployees = async() => {
+    try{
+      setLoading(true);
+      setError("");
+      const res = await 
+      fetch("/api/accounts/employees/");
+      if(!res.ok){
+        throw new Error(`Error ${res.status}:failde to fetch data`);
+      }
+      const data  = await res.json();
+      setEmployees(data);
+    }
+    catch(err) {
+      console.log(err);
+      setError(err.message || "failed to load employees");
+    }
+    finally{setLoading(false);}
+  };
+
+  useEffect(() => {
+    fetchEmployees(); 
+  }, []);
+ 
+
+
+
+
+
   return (
     <main className="flex h-screen w-full overflow-hidden bg-gray-300 text-zinc-900">
       <div className="h-screen w-64 shrink-0 overflow-hidden shadow-2xl">
@@ -79,21 +101,23 @@ function ManageEmployes() {
             Filter
           </button>
         </div>
+        
 
         <div className="overflow-x-auto rounded-lg bg-white shadow-lg">
           <table className="w-full border-collapse text-left">
             <thead className="bg-zinc-800 text-sm text-white">
               <tr>
                 <th className="px-5 py-4 font-semibold">Employee</th>
-                <th className="px-5 py-4 font-semibold">Username</th>
-                <th className="px-5 py-4 font-semibold">Role</th>
-                <th className="px-5 py-4 font-semibold">Shift</th>
+                <th className="px-5 py-4 font-semibold">Employee ID</th>
+                <th className="px-5 py-4 font-semibold">Phone Number</th>
+                <th className="px-5 py-4 font-semibold">Designation</th>
                 <th className="px-5 py-4 font-semibold">Status</th>
                 <th className="px-5 py-4 text-right font-semibold">Actions</th>
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-gray-200 text-sm">
+
+                        <tbody className="divide-y divide-gray-200 text-sm">
               {employees.map((employee) => (
                 <tr
                   key={employee.id}
@@ -102,51 +126,55 @@ function ManageEmployes() {
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-3">
                       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 font-bold text-zinc-700">
-                        {employee.name.charAt(0)}
+                        {employee.full_name ? employee.full_name.charAt(0).toUpperCase() : "?"}
                       </div>
                       <div>
                         <p className="font-semibold text-zinc-900">
-                          {employee.name}
+                          {employee.full_name}
                         </p>
-                        <p className="text-xs text-gray-500">ID #{employee.id}</p>
+                        <p className="text-xs text-gray-500">Record ID #{employee.id}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="px-5 py-4 text-gray-700">
-                    {employee.username}
+                  <td className="px-5 py-4 text-gray-700 font-mono text-sm font-semibold">
+                    {employee.employee_id || "PENDING"}
                   </td>
-                  <td className="px-5 py-4 text-gray-700">{employee.role}</td>
-                  <td className="px-5 py-4 text-gray-700">{employee.shift}</td>
+                  <td className="px-5 py-4 text-gray-700">
+                    {employee.phone_number || "Not specified"}
+                  </td>
+                  <td className="px-5 py-4 text-gray-700">
+                    {employee.designation || "Not specified"}
+                  </td>
                   <td className="px-5 py-4">
                     <span
                       className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${
-                        employee.status === "Active"
+                        employee.is_active
                           ? "bg-green-100 text-green-700"
-                          : "bg-gray-200 text-gray-600"
+                          : "bg-red-100 text-red-700"
                       }`}
                     >
-                      {employee.status}
+                      {employee.is_active ? "Active" : "Inactive"}
                     </span>
                   </td>
                   <td className="px-5 py-4">
                     <div className="flex justify-end gap-2">
                       <button
                         type="button"
-                        className="rounded-lg p-2 text-green-700 transition-colors duration-200 hover:bg-green-100"
-                        title="Activate employee"
+                        className="rounded-lg p-2 text-green-700 transition-colors duration-200 hover:bg-green-100 cursor-pointer"
+                        title="Toggle Status"
                       >
                         <UserCheck size={18} />
                       </button>
                       <button
                         type="button"
-                        className="rounded-lg p-2 text-blue-700 transition-colors duration-200 hover:bg-blue-100"
+                        className="rounded-lg p-2 text-blue-700 transition-colors duration-200 hover:bg-blue-100 cursor-pointer"
                         title="Edit employee"
                       >
                         <Pencil size={18} />
                       </button>
                       <button
                         type="button"
-                        className="rounded-lg p-2 text-red-700 transition-colors duration-200 hover:bg-red-100"
+                        className="rounded-lg p-2 text-red-700 transition-colors duration-200 hover:bg-red-100 cursor-pointer"
                         title="Delete employee"
                       >
                         <Trash2 size={18} />
@@ -156,6 +184,7 @@ function ManageEmployes() {
                 </tr>
               ))}
             </tbody>
+
           </table>
         </div>
       </section>
