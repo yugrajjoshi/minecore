@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react'
 
 import { Filter, Pencil, Plus, Search, Trash2, UserCheck } from "lucide-react";
 import NavBar from "../components/NavBar";
-
+import AddEmployeeForm from "../components/addemployeeform";
 
 function ManageEmployes() {
  
@@ -15,7 +15,7 @@ function ManageEmployes() {
   const [isAddModelOpen, setIsAddModelOpen] = useState(false);
 
 
- const [NewEmployee, setNewEmployee] = useSate({
+ const [NewEmployee, setNewEmployee] = useState({
 
   full_name: "",
   phone_number: "",
@@ -76,14 +76,22 @@ function ManageEmployes() {
 
           <button
             type="button"
+            onClick={() => setIsAddModelOpen(true)}
             className="flex h-11 items-center gap-2 rounded-lg bg-white px-4 text-sm font-bold text-zinc-700 transition-colors duration-200 hover:bg-gray-100"
           >
             <Plus size={18} />
             Add Employee
           </button>
         </header>
-
-        <div className="flex items-center justify-between gap-4 rounded-lg bg-white p-4 shadow-lg">
+          <div>
+            {isAddModelOpen ? (
+              <AddEmployeeForm 
+                onClose={() => setIsAddModelOpen(false)} 
+                onEmployeeAdded={fetchEmployees}
+              />
+            ) : null}
+          </div>
+          <div className="flex items-center justify-between gap-4 rounded-lg bg-white p-4 shadow-lg">
           <div className="flex h-11 w-full max-w-md items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-3">
             <Search size={18} className="text-gray-500" />
             <input
@@ -189,7 +197,7 @@ function ManageEmployes() {
         </div>
       </section>
     </main>
-  );
+  )
 }
 
 export default ManageEmployes;

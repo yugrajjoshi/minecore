@@ -4,6 +4,7 @@ import HomePage from './pages/AdminHome'
 import AdminProfile from './pages/AdminProfile'
 import ManageEmployes from './pages/ManageEmployes'
 import UserHome from './pages/UserHome'
+import CreateShift from './pages/Createshift'
 function App() {
   return (
     <BrowserRouter>
@@ -13,6 +14,7 @@ function App() {
         <Route path='/userhome' element={<UserHome />} />
         <Route path='/admin-profile' element={<AdminProfile />} />
         <Route path='/manageemployees' element={<ManageEmployes />} />
+        <Route path='/createshift' element={<CreateShift />} />
       </Routes>
     </BrowserRouter>
   )
