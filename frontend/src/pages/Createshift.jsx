@@ -14,12 +14,12 @@ function CreateShift(){
                         <p className="text-sm text-gray-100">Create new shifts for employees</p>
                     </div>
                 </header>
-                <div className="flex h-full border"  >
-                    <div className="border border-gray-500 w-2/3 h-full" >
+                <div className="flex h-full"  >
+                    <div className=" w-2/3 h-full" >
                     <div className  = "border border-gray-500 w-full h-full" >
-                        <div  className="flex border justify-between  items-center p-2 h-15 w-full" >
-                            <h1 className=" font-bold bg-gray-500 h-15 w-full text-white p-2" >Create New Shift</h1>
-                            <button className="bg-gray-500 rounded-2xl text-white p-2" >Reset</button>
+                        <div  className="flex border bg-gray-500 justify-between  items-center p-2 h-15 " >
+                            <h1 className=" font-bold   text-white pl-5 " >Create New Shift</h1>
+                            <button className="bg-gray-500 rounded-2xl hover:bg-gray-600  transition-colors cursor-pointer text-white p-2" >Reset</button>
                         </div>
                         <form>
                             <div className="m-2 border" >
