@@ -15,6 +15,7 @@ class EmployeeProfileSerializer(serializers.ModelSerializer):
             "marital_status",
             "date_of_birth",
             "joining_date",
+            "shift_assigned",
             "created_at",
             "updated_at",
         ]

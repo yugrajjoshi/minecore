@@ -25,6 +25,17 @@ class EmployeeProfile(models.Model):
     employment_type = models.CharField(max_length=50, blank=True)
     joining_date = models.DateField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
+    
+    SHIFT_CHOICES = [
+        ("Morning", "Morning"),
+        ("Night", "Night"),
+    ]
+    shift_assigned = models.CharField(
+        max_length=10,
+        choices=SHIFT_CHOICES,
+        default="Morning"
+    )
+    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

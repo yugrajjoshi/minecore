@@ -119,6 +119,7 @@ function ManageEmployes() {
                 <th className="px-5 py-4 font-semibold">Employee ID</th>
                 <th className="px-5 py-4 font-semibold">Phone Number</th>
                 <th className="px-5 py-4 font-semibold">Designation</th>
+                <th className="px-5 py-4 font-semibold">Assigned Shift</th>
                 <th className="px-5 py-4 font-semibold">Status</th>
                 <th className="px-5 py-4 text-right font-semibold">Actions</th>
               </tr>
@@ -152,6 +153,15 @@ function ManageEmployes() {
                   </td>
                   <td className="px-5 py-4 text-gray-700">
                     {employee.designation || "Not specified"}
+                  </td>
+                  <td className="px-5 py-4 text-gray-700">
+                    <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-semibold ${
+                      employee.shift_assigned === "Night"
+                        ? "bg-indigo-100 text-indigo-700 border border-indigo-200"
+                        : "bg-amber-100 text-amber-700 border border-amber-200"
+                    }`}>
+                      {employee.shift_assigned || "Morning"}
+                    </span>
                   </td>
                   <td className="px-5 py-4">
                     <span

@@ -36,6 +36,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'django_browser_reload',
     'accounts',
     'rest_framework',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -77,6 +79,13 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'minecore.wsgi.application'
+ASGI_APPLICATION = 'minecore.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
 
 
 # Database
@@ -131,3 +140,10 @@ AUTHENTICATION_BACKENDS = [
     'accounts.backends.EmployeeIDBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+# Trust Vite dev server origin for CSRF
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+]
+

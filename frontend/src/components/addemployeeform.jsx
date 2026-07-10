@@ -1,6 +1,22 @@
 import { useState } from "react";
 import { X, User, Phone, Briefcase, Calendar, Info } from "lucide-react";
 
+// Django CSRF token helper
+const getCookie = (name) => {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+};
+
 function AddEmployeeForm({ onClose, onEmployeeAdded }) {
   const [formData, setFormData] = useState({
     full_name: "",
@@ -10,6 +26,7 @@ function AddEmployeeForm({ onClose, onEmployeeAdded }) {
     marital_status: "Single",
     date_of_birth: "",
     joining_date: new Date().toISOString().split("T")[0],
+    shift_assigned: "Morning",
     is_active: true,
   });
 
@@ -48,6 +65,7 @@ function AddEmployeeForm({ onClose, onEmployeeAdded }) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "X-CSRFToken": getCookie("csrftoken") || "",
         },
         body: JSON.stringify(cleanedData),
       });
@@ -230,6 +248,23 @@ function AddEmployeeForm({ onClose, onEmployeeAdded }) {
                   className="h-10 w-full rounded-lg border border-gray-250 bg-gray-50 pl-10 pr-3 text-sm outline-none transition duration-150 focus:border-zinc-500 focus:bg-white focus:ring-1 focus:ring-zinc-500 text-gray-700"
                 />
               </div>
+            </div>
+
+            {/* Shift Assigned */}
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="shift_assigned" className="text-xs font-bold uppercase tracking-wider text-zinc-600">
+                Shift Assigned
+              </label>
+              <select
+                name="shift_assigned"
+                id="shift_assigned"
+                value={formData.shift_assigned}
+                onChange={handleChange}
+                className="h-10 w-full rounded-lg border border-gray-250 bg-gray-50 px-3 text-sm outline-none transition duration-150 focus:border-zinc-500 focus:bg-white focus:ring-1 focus:ring-zinc-500"
+              >
+                <option value="Morning">Morning</option>
+                <option value="Night">Night</option>
+              </select>
             </div>
 
             {/* Status Switch */}
